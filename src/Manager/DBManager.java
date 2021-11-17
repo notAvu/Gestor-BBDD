@@ -1,5 +1,8 @@
 package Manager;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.Properties;
 
@@ -19,15 +22,21 @@ public class DBManager {
     private static String user=properties.getProperty("user");
     private static String pass=properties.getProperty("pass");
     private static String url=driver + host + ":" + port + ";databaseName=" + dataBase+ ";integratedSecurity=false";
+    private static OutputStream os;
 
     public static void iniValues()
     {
-        properties.put("driver","jdbc:sqlserver://");
-        properties.put("host", "localhost");
-        properties.put("port","49674");
-        properties.put("database","DataExample");
-        properties.put("user", "sa");
-        properties.put("pass", "mitesoro");
+        properties.setProperty("driver","jdbc:sqlserver://");
+        properties.setProperty("host", "localhost");
+        properties.setProperty("port","49674");
+        properties.setProperty("database","DataExample");
+        properties.setProperty("user", "sa");
+        properties.setProperty("pass", "mitesoro");
+        try {
+            properties.store(os= new FileOutputStream(""),null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public static String getHost() {
         return host;
