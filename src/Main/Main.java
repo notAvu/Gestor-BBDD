@@ -6,10 +6,13 @@ import Menu.Menu;
 import java.util.Scanner;
 //opciones:
 //    Ejecutar cconsulta
+//      ---dar opciones de mostrar todo, el siguiente, el anterior, o el ultimo
 //    Ejecutar DML
 //    Ejecutar DDL
 //    Configuracion de la conexion
 //    Salir del programa
+
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);

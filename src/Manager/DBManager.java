@@ -87,10 +87,8 @@ public class DBManager {
             ResultSet rs= stat.executeQuery(query);
             while(rs.next())
             {
-                queryResult.append("Numero=");
-                queryResult.append(rs.getString(1));
-                queryResult.append("  Nombre=");
-                queryResult.append(rs.getString(2));
+                queryResult.append(getResultString(rs,1));
+                queryResult.append(getResultString(rs,2));
                 queryResult.append("\n");
             }
             close(rs);
@@ -102,11 +100,15 @@ public class DBManager {
         close(connection);
         return queryResult.toString();
     }
-    public static void executeDML(String query)
-    {
+
+
+    private static String getResultString(ResultSet rs, int column) throws SQLException {
+        return  rs.getMetaData().getColumnName(column) + "=" + rs.getString(column) + ", ";
+    }
+
+    public static void executeDML(String query) {
         Connection connection= createConnection();
-        try(Statement statement= connection.createStatement())
-        {
+        try(Statement statement= connection.createStatement()) {
             statement.executeUpdate(query);
             close(statement);
         }catch (SQLException e)
@@ -119,7 +121,7 @@ public class DBManager {
     {
         Connection connection= createConnection();
         try (Statement statement = connection.createStatement()){
-            String s = "";
+            statement.execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -155,6 +157,37 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //Metodos para probar cositas
+
+    public static String executeTestQuery(String query) {
+        Connection connection= createConnection();
+        StringBuilder queryResult= new StringBuilder();
+        try (Statement stat = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ResultSet rs= stat.executeQuery(query);
+            while(rs.next()){
+                queryResult.append(rs);
+            }
+            close(rs);
+            close(stat);
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        close(connection);
+        return queryResult.toString();
+    }
+
+    private static String readErrorTestItem(ResultSet rs) throws SQLException {
+        StringBuilder queryResult= new StringBuilder();
+        queryResult.append(getResultString(rs,1));
+        queryResult.append(getResultString(rs,2));
+        queryResult.append(getResultString(rs,3));
+        queryResult.append(getResultString(rs,4));
+        queryResult.append(getResultString(rs,5));
+        queryResult.append("\n");
+        return queryResult.toString();
     }
 }
 
