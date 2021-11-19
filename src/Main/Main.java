@@ -14,26 +14,45 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
         DBManager.iniProperties();
-//        if(DBManager.createConnection()!=null)
-//            Menu.mainMenu();
-//        else{
-//            configMain(sc);
-//        }
-        String menuOption= "";
-        while (menuOption.equals("")) {
+        mainMenu(sc);
+    }
+
+    private static void mainMenu(Scanner sc) {
+        boolean exit=false;
+        String menuOption;
+        while (!exit) {
+            initialConfig(sc);
             menuOption= sc.next();
             switch (menuOption) {
-                case "1" -> {
-                }
-                case "2" -> {
-                }
-                case "3" -> {
-                }
+                case "1" -> executeQuery(sc);
+                case "3" -> executeDML(sc);
+                case "2" -> executeDDL(sc);
                 case "4" -> configMain(sc);
-                case "5" -> {
-                }
+                case "5" -> exit=true;
             }
         }
+    }
+    private static void initialConfig(Scanner sc) {
+        if(DBManager.createConnection()!=null) Menu.mainMenu();
+        else configMain(sc);
+    }
+    private static void executeQuery(Scanner sc) {
+        Menu.askQuery();
+        String query=sc.next();
+        query+= sc.nextLine();
+        System.out.println(DBManager.executeQuery(query));
+    }
+    private static void executeDDL(Scanner sc) {
+        Menu.askSqlSentence();
+        String query=sc.next();
+        query+= sc.nextLine();
+        DBManager.executeDDL(query);
+    }
+    private static void executeDML(Scanner sc) {
+        Menu.askSqlSentence();
+        String query=sc.next();
+        query+= sc.nextLine();
+        DBManager.executeDML(query);
     }
     private static void configMain(Scanner sc) {
         String userChoice="";

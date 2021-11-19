@@ -79,13 +79,19 @@ public class DBManager {
         url="jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + dataBase+ ";integratedSecurity=false";
     }
 
-    public void executeQuery(String sqlQuery)
+    public static String executeQuery(String query)
     {
         Connection connection= createConnection();
+        StringBuilder queryResult= new StringBuilder();
         try (Statement stat = connection.createStatement()) {
-            ResultSet rs= stat.executeQuery(sqlQuery);
+            ResultSet rs= stat.executeQuery(query);
             while(rs.next())
             {
+                queryResult.append("Numero=");
+                queryResult.append(rs.getString(1));
+                queryResult.append("  Nombre=");
+                queryResult.append(rs.getString(2));
+                queryResult.append("\n");
             }
             close(rs);
             close(stat);
@@ -94,10 +100,30 @@ public class DBManager {
             e.printStackTrace();
         }
         close(connection);
+        return queryResult.toString();
     }
-    public void executeDML()
+    public static void executeDML(String query)
     {
-
+        Connection connection= createConnection();
+        try(Statement statement= connection.createStatement())
+        {
+            statement.executeUpdate(query);
+            close(statement);
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        close(connection);
+    }
+    public static void executeDDL(String query)
+    {
+        Connection connection= createConnection();
+        try (Statement statement = connection.createStatement()){
+            String s = "";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        close(connection);
     }
 
     public static Connection createConnection() {
