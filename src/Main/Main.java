@@ -6,7 +6,7 @@ import Menu.Menu;
 import java.util.Scanner;
 //opciones:
 //    Ejecutar cconsulta
-//      ---dar opciones de mostrar todo, el siguiente, el anterior, o el ultimo
+//      ---dar opciones de mostrar to', el siguiente, el anterior, o el ultimo
 //    Ejecutar DML
 //    Ejecutar DDL
 //    Configuracion de la conexion
@@ -19,7 +19,6 @@ public class Main {
         DBManager.iniProperties();
         mainMenu(sc);
     }
-
     private static void mainMenu(Scanner sc) {
         boolean exit=false;
         String menuOption;
@@ -31,7 +30,8 @@ public class Main {
                 case "3" -> executeDML(sc);
                 case "2" -> executeDDL(sc);
                 case "4" -> configMain(sc);
-                case "5" -> exit=true;
+                case "5" -> System.out.println();//leer script del contenido de un fichero
+                case "6" -> exit=true;
             }
         }
     }

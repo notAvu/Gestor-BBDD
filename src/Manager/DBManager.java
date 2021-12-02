@@ -2,7 +2,6 @@ package Manager;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.*;
 import java.util.Properties;
 
@@ -20,8 +19,7 @@ public class DBManager {
         setProperties();
         getPropertiesValues();
         try {
-            OutputStream os;
-            properties.store(os = new FileOutputStream("Config"),null);
+            properties.store(new FileOutputStream("Config"),null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +74,7 @@ public class DBManager {
         return url;
     }
     public static void setUrl() {
-        url="jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + dataBase+ ";integratedSecurity=false";
+        url="jdbc:sqlserver://" + host + ":" + port + ";databaseName=" + dataBase+ ";integratedSecurity=false;allowMultiQueries=true";
     }
 
     public static String executeQuery(String query)
@@ -100,7 +98,6 @@ public class DBManager {
         close(connection);
         return queryResult.toString();
     }
-
 
     private static String getResultString(ResultSet rs, int column) throws SQLException {
         return  rs.getMetaData().getColumnName(column) + "=" + rs.getString(column) + ", ";
