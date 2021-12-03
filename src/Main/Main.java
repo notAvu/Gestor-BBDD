@@ -1,6 +1,7 @@
 package Main;
 
 import Manager.DBManager;
+import Manager.QueryManager;
 import Menu.Menu;
 
 import java.util.Scanner;
@@ -30,10 +31,14 @@ public class Main {
                 case "3" -> executeDML(sc);
                 case "2" -> executeDDL(sc);
                 case "4" -> configMain(sc);
-                case "5" -> System.out.println();//leer script del contenido de un fichero
+                case "5" -> exeQueryFromFile();
                 case "6" -> exit=true;
             }
         }
+    }
+    private static void exeQueryFromFile() {
+        QueryManager manager= new QueryManager("sqlQuery");
+        DBManager.executeQuery(manager.readQuery());
     }
     private static void initialConfig(Scanner sc) {
         if(DBManager.createConnection()!=null) Menu.mainMenu();
