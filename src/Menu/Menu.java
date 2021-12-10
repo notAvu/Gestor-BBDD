@@ -8,7 +8,8 @@ public class Menu {
                 2- Ejecutar DML
                 3- Ejecutar DDl
                 4- Configurar conexion
-                5- Salir
+                5- Ejecutar Script
+                6- Salir
                 """);
     }
     public static void configMenu() {
