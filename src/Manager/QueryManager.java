@@ -19,16 +19,17 @@ public class QueryManager {
 
     public String readQuery()
     {
-        String query = "";
-        while(query!=null) {
+        StringBuilder query = new StringBuilder();
+        while(query!=null) {//TODO CAMBIAR A BOOL
             try {
-                query=br.readLine().replace("GO",";");
+                String placeholder=br.readLine();
+                if(placeholder!=null)
+                query.append(placeholder.replace("GO", ";"));
             } catch (IOException e) {
                 e.printStackTrace();
-                query=null;
             }
         }
-        return query;
+        return query.toString();
     }
 
     private void iniReader() {
