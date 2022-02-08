@@ -34,9 +34,9 @@ public class DBManager {
     }
     private static void setProperties() {
         properties.setProperty("host", "localhost");
-        properties.setProperty("port", "49675");
+        properties.setProperty("port", "1433");
         properties.setProperty("database","DataExample");
-        properties.setProperty("user", "alvaroBasado");
+        properties.setProperty("user", "sa");
         properties.setProperty("pass", "mitesoro");
     }
 
